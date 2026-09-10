@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class GreedCommand implements CommandExecutor, TabCompleter {
@@ -30,27 +30,35 @@ public final class GreedCommand implements CommandExecutor, TabCompleter {
         if (!sender.hasPermission("bladeofgreed.use")) {
             sender.sendMessage(
                     miniMessage.deserialize(
-                            plugin.getConfig().getString(
-                                    "messages.no-permission",
-                                    "<red>No permission.</red>"
-                            )
+                            "<red>You don't have permission to use /bg.</red>"
                     )
             );
             return true;
         }
 
         if (args.length == 0) {
+
             sender.sendMessage(
                     miniMessage.deserialize(
-                            "<gold>BladeOfGreed</gold> <gray>v"
-                                    + plugin.getPluginMeta().getVersion()
-                                    + "</gray>"
+                            "<gold><bold>BladeOfGreed</bold></gold>"
                     )
             );
 
             sender.sendMessage(
                     miniMessage.deserialize(
-                            "<yellow>/greed reload</yellow> <gray>- reload configuration</gray>"
+                            "<yellow>/bg reload</yellow> <gray>- Reload configuration</gray>"
+                    )
+            );
+
+            sender.sendMessage(
+                    miniMessage.deserialize(
+                            "<yellow>Slot 5</yellow> <gray>- Golden Claim</gray>"
+                    )
+            );
+
+            sender.sendMessage(
+                    miniMessage.deserialize(
+                            "<yellow>Slot 6</yellow> <gray>- King of Greed</gray>"
                     )
             );
 
@@ -58,11 +66,15 @@ public final class GreedCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args[0].equalsIgnoreCase("reload")) {
+
             plugin.reloadConfig();
 
             sender.sendMessage(
                     miniMessage.deserialize(
-                            "<green>BladeOfGreed configuration reloaded.</green>"
+                            plugin.getConfig().getString(
+                                    "messages.reloaded",
+                                    "<green>Configuration reloaded.</green>"
+                            )
                     )
             );
 
@@ -71,7 +83,7 @@ public final class GreedCommand implements CommandExecutor, TabCompleter {
 
         sender.sendMessage(
                 miniMessage.deserialize(
-                        "<red>Unknown subcommand.</red>"
+                        "<red>Unknown command.</red> <gray>Use /bg</gray>"
                 )
         );
 
@@ -87,13 +99,9 @@ public final class GreedCommand implements CommandExecutor, TabCompleter {
     ) {
 
         if (args.length == 1) {
-            List<String> suggestions = new ArrayList<>();
-
-            suggestions.add("reload");
-
-            return suggestions;
+            return List.of("reload");
         }
 
-        return List.of();
+        return Collections.emptyList();
     }
 }
