@@ -1,10 +1,11 @@
-name: Blade of Greed
-main: me.greed.bladeofgreed.BladeOfGreedPlugin
+name: BladeOfGreed
 version: 1.0.0
-api-version: 1.20
+main: me.greed.bladeofgreed.BladeOfGreedPlugin
+description: Greed Relic ability plugin
 author: TUKOSHIBU
+api-version: '26.2'
+
 commands:
- bg:
- description: Give the Blade of Greed (Owner only)
- usage: /bg
- permission-message: §cThis weapon belongs to §eTUKOSHIBU§c.
+  bg:
+    description: Gives the Greed Relic
+    usage: /bg
