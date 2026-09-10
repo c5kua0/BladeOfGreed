@@ -1,14 +1,12 @@
-cooldowns:
-  authority: 25
-  claim: 20
-  ultimate: 60
+# BladeOfGreed Configuration
 
-skills:
-  authority:
-    radius: 6
+settings:
+  enabled: true
 
-  claim:
-    radius: 8
+messages:
+  prefix: "<gold>[BladeOfGreed]</gold> "
+  no-permission: "<red>You don't have permission to use this command.</red>"
+  enabled: "<green>BladeOfGreed is enabled.</green>"
+  disabled: "<red>BladeOfGreed is disabled.</red>"
 
-  ultimate:
-    duration: 8
+debug: false
