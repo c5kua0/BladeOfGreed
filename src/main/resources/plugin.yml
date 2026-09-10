@@ -2,15 +2,15 @@ name: BladeOfGreed
 version: 1.0.0
 main: me.greed.bladeofgreed.BladeOfGreedPlugin
 
-description: BladeOfGreed Paper plugin
-author: c5kua0
+description: BladeOfGreed
+author: TUKOSHIBU
 
 api-version: '26.1'
 
 commands:
-  greed:
+  bg:
     description: Main BladeOfGreed command
-    usage: /greed
+    usage: /bg
     permission: bladeofgreed.use
 
 permissions:
