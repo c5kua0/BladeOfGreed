@@ -1,12 +1,28 @@
-# BladeOfGreed Configuration
-
 settings:
   enabled: true
 
+skill:
+  name: "Golden Claim"
+  slot: 5
+  cooldown-seconds: 15
+  duration-seconds: 5
+  radius: 6
+
+awaken:
+  name: "King of Greed"
+  slot: 6
+  cooldown-seconds: 60
+  duration-seconds: 30
+
 messages:
   prefix: "<gold>[BladeOfGreed]</gold> "
-  no-permission: "<red>You don't have permission to use this command.</red>"
   enabled: "<green>BladeOfGreed is enabled.</green>"
   disabled: "<red>BladeOfGreed is disabled.</red>"
+  reloaded: "<green>Configuration reloaded.</green>"
+  cooldown: "<red>Ability is on cooldown.</red>"
+  awakened: "<gold><bold>King of Greed has awakened!</bold></gold>"
+  global-awaken:
+    enabled: true
+    message: "<gold><bold>✦ KING OF GREED ✦</bold></gold> <yellow>%player% has awakened!</yellow>"
 
 debug: false
