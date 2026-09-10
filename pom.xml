@@ -1,77 +1,53 @@
-<groupId>me.greed</groupId>
-<artifactId>bladeofgreed</artifactId>
-<version>1.0.0</version>
-<name>Blade of Greed</name>
-<description>Blade of Greed plugin for Paper</description>
-<url>https://example.org/BladeOfGreed</url>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>21</maven.compiler.release>
-    <java.version>21</java.version>
-    <paper.version>1.20.2-R0.1-SNAPSHOT</paper.version>
-</properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<repositories>
-    <repository>
-        <id>papermc-repo</id>
-        <url>https://repo.papermc.io/repository/maven-public/</url>
-    </repository>
-</repositories>
+    <modelVersion>4.0.0</modelVersion>
 
-<dependencies>
-    <!-- Paper API (provided at runtime by the server) -->
-    <dependency>
-        <groupId>io.papermc.paper</groupId>
-        <artifactId>paper-api</artifactId>
-        <version>${paper.version}</version>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
+    <groupId>me.greed</groupId>
+    <artifactId>bladeofgreed</artifactId>
+    <version>1.0.0</version>
 
-<build>
-    <plugins>
-        <!-- Compiler configured for Java 21 -->
-        <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.11.0</version>
-            <configuration>
-                <release>${maven.compiler.release}</release>
-            </configuration>
-        </plugin>
+    <name>BladeOfGreed</name>
+    <description>Greed Relic Plugin</description>
 
-        <!-- Build a jar suitable for Paper -->
-        <plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.4.0</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-        <!-- Optional: shade to include resources (not strictly necessary) -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>3.4.1</version>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                    <configuration>
-                        <createDependencyReducedPom>false</createDependencyReducedPom>
-                        <minimizeJar>false</minimizeJar>
-                        <shadedArtifactAttached>false</shadedArtifactAttached>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
 
-    </plugins>
-</build>
+    <dependencies>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>BladeOfGreed</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <release>21</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
