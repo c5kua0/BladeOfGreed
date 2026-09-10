@@ -1,11 +1,19 @@
 name: BladeOfGreed
 version: 1.0.0
 main: me.greed.bladeofgreed.BladeOfGreedPlugin
-description: Greed Relic ability plugin
-author: TUKOSHIBU
-api-version: '26.2'
+
+description: BladeOfGreed Paper plugin
+author: c5kua0
+
+api-version: '26.1'
 
 commands:
-  bg:
-    description: Gives the Greed Relic
-    usage: /bg
+  greed:
+    description: Main BladeOfGreed command
+    usage: /greed
+    permission: bladeofgreed.use
+
+permissions:
+  bladeofgreed.use:
+    description: Allows use of BladeOfGreed commands
+    default: true
