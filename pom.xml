@@ -12,11 +12,12 @@
     <version>1.0.0</version>
 
     <name>BladeOfGreed</name>
-    <description>Greed Relic Plugin</description>
+    <description>Greed Archbishop custom Minecraft plugin</description>
 
     <properties>
-        <maven.compiler.release>21</maven.compiler.release>
+        <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>25</maven.compiler.release>
     </properties>
 
     <repositories>
@@ -30,21 +31,22 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.8-R0.1-SNAPSHOT</version>
+            <version>26.1.2.build.??</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>BladeOfGreed</finalName>
+        <finalName>BladeOfGreed-1.0.0</finalName>
 
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.14.0</version>
+
                 <configuration>
-                    <release>21</release>
+                    <release>25</release>
                 </configuration>
             </plugin>
         </plugins>
