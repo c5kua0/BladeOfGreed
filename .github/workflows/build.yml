@@ -2,28 +2,32 @@ name: Build BladeOfGreed
 
 on:
   push:
-  workflow_dispatch:
+    branches:
+      - main
+      - master
+
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
 
-      - name: Set up Java 21
-        uses: actions/setup-java@v4
+      - name: Setup Java 25
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: '25'
           cache: maven
 
-      - name: Build with Maven
+      - name: Build
         run: mvn -B clean package
 
-      - name: Upload Plugin JAR
+      - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
           name: BladeOfGreed
-          path: target/*.jar
+          path: target/BladeOfGreed-1.0.0.jar
