@@ -10,26 +10,33 @@ public final class BladeOfGreedPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         instance = this;
 
         saveDefaultConfig();
 
-        GreedCommand greedCommand = new GreedCommand(this);
+        GreedCommand command = new GreedCommand(this);
 
-        if (getCommand("greed") != null) {
-            getCommand("greed").setExecutor(greedCommand);
-            getCommand("greed").setTabCompleter(greedCommand);
+        if (getCommand("bg") != null) {
+            getCommand("bg").setExecutor(command);
+            getCommand("bg").setTabCompleter(command);
         }
 
-        getServer().getPluginManager()
+        getServer()
+                .getPluginManager()
                 .registerEvents(new GreedListener(this), this);
 
-        getLogger().info("BladeOfGreed has been enabled.");
+        getLogger().info("=================================");
+        getLogger().info("       BladeOfGreed");
+        getLogger().info("       Version 1.0.0");
+        getLogger().info("=================================");
+        getLogger().info("Plugin enabled successfully.");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("BladeOfGreed has been disabled.");
+
+        getLogger().info("BladeOfGreed disabled.");
     }
 
     public static BladeOfGreedPlugin getInstance() {
