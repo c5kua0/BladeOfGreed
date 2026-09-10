@@ -1,0 +1,77 @@
+<groupId>me.greed</groupId>
+<artifactId>bladeofgreed</artifactId>
+<version>1.0.0</version>
+<name>Blade of Greed</name>
+<description>Blade of Greed plugin for Paper</description>
+<url>https://example.org/BladeOfGreed</url>
+
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+    <java.version>21</java.version>
+    <paper.version>1.20.2-R0.1-SNAPSHOT</paper.version>
+</properties>
+
+<repositories>
+    <repository>
+        <id>papermc-repo</id>
+        <url>https://repo.papermc.io/repository/maven-public/</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <!-- Paper API (provided at runtime by the server) -->
+    <dependency>
+        <groupId>io.papermc.paper</groupId>
+        <artifactId>paper-api</artifactId>
+        <version>${paper.version}</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <!-- Compiler configured for Java 21 -->
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <release>${maven.compiler.release}</release>
+            </configuration>
+        </plugin>
+
+        <!-- Build a jar suitable for Paper -->
+        <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.4.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                    </manifest>
+                </archive>
+            </configuration>
+        </plugin>
+
+        <!-- Optional: shade to include resources (not strictly necessary) -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.4.1</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <createDependencyReducedPom>false</createDependencyReducedPom>
+                        <minimizeJar>false</minimizeJar>
+                        <shadedArtifactAttached>false</shadedArtifactAttached>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+    </plugins>
+</build>
