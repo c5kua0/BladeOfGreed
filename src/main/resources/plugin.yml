@@ -1,0 +1,10 @@
+name: Blade of Greed
+main: me.greed.bladeofgreed.BladeOfGreedPlugin
+version: 1.0.0
+api-version: 1.20
+author: TUKOSHIBU
+commands:
+ bg:
+ description: Give the Blade of Greed (Owner only)
+ usage: /bg
+ permission-message: §cThis weapon belongs to §eTUKOSHIBU§c.
