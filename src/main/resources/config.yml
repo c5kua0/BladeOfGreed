@@ -1,0 +1,14 @@
+cooldowns:
+  authority: 25
+  claim: 20
+  ultimate: 60
+
+skills:
+  authority:
+    radius: 6
+
+  claim:
+    radius: 8
+
+  ultimate:
+    duration: 8
