@@ -30,9 +30,34 @@ public final class GreedListener implements Listener {
         this.plugin = plugin;
     }
 
+    /*
+     * Checks whether the player is the configured Greed owner.
+     */
+    private boolean isGreedOwner(Player player) {
+
+        boolean ownerOnly = plugin.getConfig().getBoolean(
+                "owner.enabled",
+                true
+        );
+
+        if (!ownerOnly) {
+            return true;
+        }
+
+        String owner = plugin.getConfig().getString(
+                "owner.name",
+                "TUKOSHIBU"
+        );
+
+        return player.getName().equalsIgnoreCase(owner);
+    }
+
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
 
+        /*
+         * Only listen to the player's main hand.
+         */
         if (event.getHand() != EquipmentSlot.HAND) {
             return;
         }
@@ -46,22 +71,62 @@ public final class GreedListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if (!plugin.getConfig().getBoolean("settings.enabled", true)) {
+        /*
+         * Plugin enabled check.
+         */
+        if (!plugin.getConfig().getBoolean(
+                "settings.enabled",
+                true
+        )) {
             return;
         }
 
-        int slot = player.getInventory().getHeldItemSlot();
-
-        // Minecraft hotbar:
-        // 0 = slot 1
-        // 4 = slot 5
-        // 5 = slot 6
-
-        if (slot == 4) {
-            activateGoldenClaim(player);
+        /*
+         * OWNER CHECK
+         *
+         * Everyone else is ignored.
+         */
+        if (!isGreedOwner(player)) {
+            return;
         }
 
-        if (slot == 5) {
+        /*
+         * Bukkit hotbar indexes:
+         *
+         * Slot 1 = index 0
+         * Slot 2 = index 1
+         * Slot 3 = index 2
+         * Slot 4 = index 3
+         * Slot 5 = index 4
+         * Slot 6 = index 5
+         */
+
+        int slot = player.getInventory().getHeldItemSlot();
+
+        /*
+         * SLOT 5
+         * Golden Claim
+         */
+        int skillSlot = plugin.getConfig().getInt(
+                "skill.slot",
+                5
+        );
+
+        /*
+         * SLOT 6
+         * King of Greed
+         */
+        int awakenSlot = plugin.getConfig().getInt(
+                "awaken.slot",
+                6
+        );
+
+        if (slot == skillSlot - 1) {
+            activateGoldenClaim(player);
+            return;
+        }
+
+        if (slot == awakenSlot - 1) {
             activateAwaken(player);
         }
     }
@@ -70,33 +135,46 @@ public final class GreedListener implements Listener {
 
         UUID uuid = player.getUniqueId();
 
-        long cooldown = plugin.getConfig()
-                .getLong("skill.cooldown-seconds", 15) * 1000L;
+        long cooldown = plugin.getConfig().getLong(
+                "skill.cooldown-seconds",
+                15
+        ) * 1000L;
 
         long now = System.currentTimeMillis();
 
-        if (skillCooldowns.containsKey(uuid)
-                && now - skillCooldowns.get(uuid) < cooldown) {
+        if (skillCooldowns.containsKey(uuid)) {
 
-            player.sendMessage(
-                    miniMessage.deserialize(
-                            plugin.getConfig().getString(
-                                    "messages.cooldown",
-                                    "<red>Ability is on cooldown.</red>"
-                            )
-                    )
-            );
+            long elapsed =
+                    now - skillCooldowns.get(uuid);
 
-            return;
+            if (elapsed < cooldown) {
+
+                long remaining =
+                        (cooldown - elapsed + 999) / 1000;
+
+                player.sendMessage(
+                        miniMessage.deserialize(
+                                "<red>Golden Claim is on cooldown for "
+                                        + remaining
+                                        + "s.</red>"
+                        )
+                );
+
+                return;
+            }
         }
 
         skillCooldowns.put(uuid, now);
 
-        int duration = plugin.getConfig()
-                .getInt("skill.duration-seconds", 5);
+        int duration = plugin.getConfig().getInt(
+                "skill.duration-seconds",
+                5
+        );
 
-        int radius = plugin.getConfig()
-                .getInt("skill.radius", 6);
+        int radius = plugin.getConfig().getInt(
+                "skill.radius",
+                6
+        );
 
         player.sendMessage(
                 miniMessage.deserialize(
@@ -123,13 +201,18 @@ public final class GreedListener implements Listener {
                     return;
                 }
 
-                Location location = player.getLocation().clone();
+                Location location =
+                        player.getLocation().clone();
+
                 location.add(0, 1, 0);
 
-                for (int i = 0; i < 12; i++) {
+                /*
+                 * Golden circular aura.
+                 */
+                for (int i = 0; i < 16; i++) {
 
                     double angle =
-                            (Math.PI * 2 * i) / 12;
+                            (Math.PI * 2 * i) / 16;
 
                     double x =
                             Math.cos(angle) * radius;
@@ -151,6 +234,9 @@ public final class GreedListener implements Listener {
                     );
                 }
 
+                /*
+                 * Center particles.
+                 */
                 player.getWorld().spawnParticle(
                         Particle.END_ROD,
                         location,
@@ -175,57 +261,64 @@ public final class GreedListener implements Listener {
 
         UUID uuid = player.getUniqueId();
 
-        long cooldown = plugin.getConfig()
-                .getLong("awaken.cooldown-seconds", 60) * 1000L;
+        long cooldown = plugin.getConfig().getLong(
+                "awaken.cooldown-seconds",
+                60
+        ) * 1000L;
 
         long now = System.currentTimeMillis();
 
-        if (awakenCooldowns.containsKey(uuid)
-                && now - awakenCooldowns.get(uuid) < cooldown) {
+        if (awakenCooldowns.containsKey(uuid)) {
 
-            player.sendMessage(
-                    miniMessage.deserialize(
-                            plugin.getConfig().getString(
-                                    "messages.cooldown",
-                                    "<red>Ability is on cooldown.</red>"
-                            )
-                    )
-            );
+            long elapsed =
+                    now - awakenCooldowns.get(uuid);
 
-            return;
+            if (elapsed < cooldown) {
+
+                long remaining =
+                        (cooldown - elapsed + 999) / 1000;
+
+                player.sendMessage(
+                        miniMessage.deserialize(
+                                "<red>King of Greed is on cooldown for "
+                                        + remaining
+                                        + "s.</red>"
+                        )
+                );
+
+                return;
+            }
         }
 
         awakenCooldowns.put(uuid, now);
 
-        int duration = plugin.getConfig()
-                .getInt("awaken.duration-seconds", 30);
-
-        String message = plugin.getConfig()
-                .getString(
-                        "messages.global-awaken.message",
-                        "<gold><bold>✦ KING OF GREED ✦</bold></gold> <yellow>%player% has awakened!</yellow>"
-                );
-
-        message = message.replace(
-                "%player%",
-                player.getName()
+        int duration = plugin.getConfig().getInt(
+                "awaken.duration-seconds",
+                30
         );
 
-        if (plugin.getConfig()
-                .getBoolean("messages.global-awaken.enabled", true)) {
+        /*
+         * Global announcement.
+         */
+        if (plugin.getConfig().getBoolean(
+                "messages.global-awaken.enabled",
+                true
+        )) {
 
-            plugin.getServer()
-                    .broadcast(
-                            miniMessage.deserialize(message)
-                    );
+            String message = plugin.getConfig().getString(
+                    "messages.global-awaken.message",
+                    "<gold><bold>✦ KING OF GREED ✦</bold></gold> <yellow>%player% has awakened!</yellow>"
+            );
+
+            message = message.replace(
+                    "%player%",
+                    player.getName()
+            );
+
+            plugin.getServer().broadcast(
+                    miniMessage.deserialize(message)
+            );
         }
-
-        player.playSound(
-                player.getLocation(),
-                Sound.UI_TOAST_CHALLENGE_COMPLETE,
-                1.0f,
-                0.8f
-        );
 
         player.sendMessage(
                 miniMessage.deserialize(
@@ -236,6 +329,16 @@ public final class GreedListener implements Listener {
                 )
         );
 
+        player.playSound(
+                player.getLocation(),
+                Sound.UI_TOAST_CHALLENGE_COMPLETE,
+                1.0f,
+                0.8f
+        );
+
+        /*
+         * Awakening visual effect.
+         */
         new BukkitRunnable() {
 
             int ticks = 0;
