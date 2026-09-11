@@ -46,6 +46,12 @@ public final class GreedCommand implements CommandExecutor, TabCompleter {
 
             sender.sendMessage(
                     miniMessage.deserialize(
+                            "<gray>Version 1.0.0</gray>"
+                    )
+            );
+
+            sender.sendMessage(
+                    miniMessage.deserialize(
                             "<yellow>/bg reload</yellow> <gray>- Reload configuration</gray>"
                     )
             );
@@ -66,6 +72,23 @@ public final class GreedCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args[0].equalsIgnoreCase("reload")) {
+
+            /*
+             * Only the configured owner can reload.
+             */
+            String owner = plugin.getConfig().getString(
+                    "owner.name",
+                    "TUKOSHIBU"
+            );
+
+            if (!sender.getName().equalsIgnoreCase(owner)) {
+                sender.sendMessage(
+                        miniMessage.deserialize(
+                                "<red>Only the Greed owner can use this command.</red>"
+                        )
+                );
+                return true;
+            }
 
             plugin.reloadConfig();
 
