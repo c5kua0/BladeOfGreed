@@ -1,6 +1,10 @@
 settings:
   enabled: true
 
+owner:
+  enabled: true
+  name: "TUKOSHIBU"
+
 skill:
   name: "Golden Claim"
   slot: 5
@@ -15,12 +19,12 @@ awaken:
   duration-seconds: 30
 
 messages:
-  prefix: "<gold>[BladeOfGreed]</gold> "
-  enabled: "<green>BladeOfGreed is enabled.</green>"
-  disabled: "<red>BladeOfGreed is disabled.</red>"
-  reloaded: "<green>Configuration reloaded.</green>"
+  reloaded: "<green>BladeOfGreed configuration reloaded.</green>"
+
   cooldown: "<red>Ability is on cooldown.</red>"
+
   awakened: "<gold><bold>King of Greed has awakened!</bold></gold>"
+
   global-awaken:
     enabled: true
     message: "<gold><bold>✦ KING OF GREED ✦</bold></gold> <yellow>%player% has awakened!</yellow>"
