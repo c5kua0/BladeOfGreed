@@ -22,20 +22,24 @@ public final class BladeOfGreedPlugin extends JavaPlugin {
             getCommand("bg").setTabCompleter(command);
         }
 
-        getServer()
-                .getPluginManager()
-                .registerEvents(new GreedListener(this), this);
+        getServer().getPluginManager().registerEvents(
+                new GreedListener(this),
+                this
+        );
 
         getLogger().info("=================================");
-        getLogger().info("       BladeOfGreed");
-        getLogger().info("       Version 1.0.0");
+        getLogger().info("        BladeOfGreed");
+        getLogger().info("        Version 1.0.0");
         getLogger().info("=================================");
         getLogger().info("Plugin enabled successfully.");
+        getLogger().info(
+                "Greed Owner: " +
+                getConfig().getString("owner.name", "TUKOSHIBU")
+        );
     }
 
     @Override
     public void onDisable() {
-
         getLogger().info("BladeOfGreed disabled.");
     }
 
